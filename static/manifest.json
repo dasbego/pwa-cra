@@ -4,12 +4,17 @@
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16 144x144",
+      "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
+    {
+      "src": "homescreen.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
   ],
   "start_url": ".",
-  "display": "standalone",
+  "display": "fullscreen",
   "theme_color": "#000000",
   "background_color": "#ffffff"
 }
