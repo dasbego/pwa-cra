@@ -42,7 +42,7 @@ export default (req, res, next) => {
 
     const context = {}
 
-    const routes = ['/', '/login', '/events'];
+    const routes = ['/', '/login', '/events', ''];
     const match = routes.find(route => matchPath(req.path, {
       path: route,
       exact: true,
