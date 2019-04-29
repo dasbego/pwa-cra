@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Header from '../../components/Header';
 import EventsList from '../../components/EventsList';
+import PageContainer from '../../components/PageContainer';
 // events mock
 import MockEvents from '../../mocks/events';
 
@@ -22,10 +23,12 @@ const Events = (props) => {
   return (
     <>
       <Header />
-      <div className={cs.eventsContainer}>
-        <EventsList key="nextEvents" title="Próximos eventos" events={upcomingEvents} />
-        <EventsList key="prevEvents" title="Eventos pasados" events={pastEvents} />
-      </div>
+      <PageContainer>
+        <div className={cs.eventsContainer}>
+          <EventsList key="nextEvents" title="Próximos eventos" events={upcomingEvents} />
+          <EventsList key="prevEvents" title="Eventos pasados" events={pastEvents} />
+        </div>
+      </PageContainer>
     </>
   );
 }
