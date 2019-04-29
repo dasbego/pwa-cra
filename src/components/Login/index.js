@@ -27,6 +27,7 @@ class Login extends React.Component {
   }
 
   login = () => {
+    console.log('login click')
     this.props.history.push('/events')
   }
 

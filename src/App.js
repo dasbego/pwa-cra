@@ -4,21 +4,22 @@ import Events from './pages/Events';
 import EventDetail from './pages/EventDetail';
 import InstaFeed from './pages/InstagramFeed';
 import TwitterFeed from './pages/TwitterFeed';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import './App.css';
 
 const isProd = process.env === 'production';
 
 function App() {
   return (
-    <Router basename="/sand" >
-      <Route exact path="/" component={Login} />
+    <Switch>
+      <Redirect exact from="/" to="/login" />
       <Route exact path="/login" component={Login} />
-      <Route path="/events" component={Events} />
-      <Route path="/event/:id" component={EventDetail} />
-      <Route path="/instafeed" component={InstaFeed} />
-      <Route path="/twitterfeed" component={TwitterFeed} />
-    </Router>
+      <Route exact path="/events" component={Events} />
+      <Route exact path="/event/:id" component={EventDetail} />
+      <Route exact path="/instafeed" component={InstaFeed} />
+      <Route exact path="/twitterfeed" component={TwitterFeed} />
+      <Route component={() => <div>not found</div>} />
+    </Switch>
   );
 }
 

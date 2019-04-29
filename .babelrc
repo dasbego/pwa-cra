@@ -1,3 +1,19 @@
 {
-  "presets": [ "next/babel" ],
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    "@babel/plugin-transform-modules-commonjs",
+    [
+      "transform-assets",
+      {
+        "extensions": [
+          "css",
+          "svg"
+        ],
+        "name": "/static/media/[name].[hash:8].[ext]"
+      }
+    ]
+  ],
 }
