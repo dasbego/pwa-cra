@@ -5,13 +5,14 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@mdi/react';
 import { withStyles } from '@material-ui/core/styles';
-import cs from 'classname';
+import cs from 'classnames';
 import { mdiFacebookBox, mdiTwitterBox } from '@mdi/js';
 import Divider from '@material-ui/core/Divider';
-import Link from 'next/link';
-import Router from 'next/router'
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import Styles from './styles';
+import FacebookButton from '../FacebookButton';
 
 class Login extends React.Component {
   state = {
@@ -26,9 +27,7 @@ class Login extends React.Component {
   }
 
   login = () => {
-    Router.push({
-      pathname: '/events'
-    })
+    this.props.history.push('/events')
   }
 
   render() {
@@ -65,8 +64,8 @@ class Login extends React.Component {
             Login
           </Button>
         </form>
-        <Link href="/recover-account">
-          <a>¿Olvidaste tu contraseña?</a>
+        <Link to="/recover-account">
+          ¿Olvidaste tu contraseña?
         </Link>
         <Divider variant="fullWidth" />
         <Grid container direction="column" className={classes.loginGrid}>
@@ -82,6 +81,9 @@ class Login extends React.Component {
             </Button>
           </Grid>
           <Grid item className={cs(classes.hCentered, classes.loginGridItem)}>
+            <FacebookButton />
+          </Grid>
+          <Grid item className={cs(classes.hCentered, classes.loginGridItem)}>
             <Button size="small" fullWidth className={classes.buttonGridItemButton}>
             <Icon path={mdiTwitterBox} size={1} />
             Login con Twitter
@@ -93,4 +95,5 @@ class Login extends React.Component {
   }
 }
 
-export default withStyles(Styles)(Login);
+const CompWithRouter = withRouter(Login);
+export default withStyles(Styles)(CompWithRouter);

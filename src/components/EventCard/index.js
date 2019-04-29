@@ -3,19 +3,18 @@ import Paper from '@material-ui/core/Paper'
 import { withStyles } from '@material-ui/core/styles';
 import { mdiMapMarker } from '@mdi/js';
 import Icon from '@mdi/react';
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 
 const Event = (props) => {
   const { data, classes } = props;
 
   return (
     <Paper className={classes.container}>
-      <Link as={`/event/${data.id}`} href={`/eventDetail?id=${data.id}`}>
-        <div className={classes.fullWidth}>
-          <div className={classes.imgContainer}>
-            <img className={classes.img} src={data.image} />
-          </div>
-          <div className={classes.description}>
+      <Link to={`/event/${data.id}`} className={classes.cardLink}>
+        <div className={classes.imgContainer}>
+          <img alt="placeholder" className={classes.img} src={data.thumbnail} />
+        </div>
+        <div className={classes.description}>
             <div className={classes.info1}>
               <span><b>{data.name}</b></span>
               <span>
@@ -30,7 +29,6 @@ const Event = (props) => {
               </span>
             </div>
           </div>
-        </div>
       </Link>
     </Paper>
   );
@@ -48,10 +46,21 @@ const styles ={
     display: 'flex',
     width: '35%'
   },
+  cardLink: {
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    textDecoration: 'none',
+    color: 'black',
+    '&:hover': {
+      color: '#00bff4'
+    }
+  },
   img: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'gray'
+    backgroundColor: 'gray',
+    objectFit: 'cover'
   },
   description: {
     padding: '1rem',

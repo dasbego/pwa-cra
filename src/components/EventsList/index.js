@@ -6,7 +6,6 @@ const styles = {
 }
 
 const EventList = (props) => {
-  const cs = props.classes;
   return (
     <div>
       <h3><b>{props.title}</b></h3>

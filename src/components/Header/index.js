@@ -3,13 +3,14 @@ import { withStyles } from '@material-ui/core/styles';
 import { mdiMenu, mdiAccount } from '@mdi/js';
 import Icon from '@mdi/react';
 import Button from '@material-ui/core/Button';
+import Logo from '../../images/logo.svg';
+import { Link } from 'react-router-dom';
 
 const styles = {
   container: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%',
     height: '70px',
     backgroundColor: '#c5c9d2',
     left: 0,
@@ -18,8 +19,7 @@ const styles = {
     padding: '0 1rem'
   },
   headerLogo: {
-    width: '170px',
-    height: '76.5px'
+    width: '100px',
   },
   headerButton: {
     width: '60px',
@@ -35,7 +35,9 @@ const Header = ({ classes }) => {
       <Button className={cs.headerButton}>
         <Icon path={mdiMenu} size={1} />
       </Button>
-      <img className={cs.headerLogo} src="/static/logo.svg" />
+      <Link to="/">
+        <img className={cs.headerLogo} src={Logo} alt="logo" />
+      </Link>
       <Button className={cs.headerButton}>
         <Icon path={mdiAccount} size={1} />
       </Button>

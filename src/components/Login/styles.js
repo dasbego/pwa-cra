@@ -1,5 +1,3 @@
-import { endianness } from "os";
-
 export default theme => ({
   form: {
     display: 'flex',

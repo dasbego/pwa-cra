@@ -1,12 +1,13 @@
 import React from 'react';
 import Login from '../../components/Login';
 import { withStyles } from '@material-ui/core/styles';
+import Logo from '../../images/logo.svg';
 
 const LoginPage = ({ classes }) => {
   return (
     <div>
       <header className={classes.container}>
-        <img src="/static/logo_alt.png" />
+        <img alt="logo" src={Logo} />
       </header>
       <Login />
     </div>
