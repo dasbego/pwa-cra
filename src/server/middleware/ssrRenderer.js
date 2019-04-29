@@ -8,6 +8,7 @@ import {
   createMuiTheme,
   createGenerateClassName,
 } from '@material-ui/core/styles';
+import Routes from '../../routes';
 
 // import our main App component
 import App from '../../App';
@@ -42,7 +43,7 @@ export default (req, res, next) => {
 
     const context = {}
 
-    const routes = ['/', '/login', '/events', ''];
+    const routes = Routes.map(({route}) => (route));
     const match = routes.find(route => matchPath(req.path, {
       path: route,
       exact: true,
