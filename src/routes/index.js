@@ -3,7 +3,6 @@ import Events from '../pages/Events';
 import EventDetail from '../pages/EventDetail';
 import InstaFeed from '../pages/InstagramFeed';
 import TwitterFeed from '../pages/TwitterFeed';
-import NotFound from '../pages/NotFound';
 
 export default [{
     path: '/login',
