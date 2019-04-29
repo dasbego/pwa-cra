@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Icon from '@mdi/react';
 import { withStyles } from '@material-ui/core/styles';
 import cs from 'classnames';
-import { mdiFacebookBox, mdiTwitterBox } from '@mdi/js';
+import { mdiTwitterBox } from '@mdi/js';
 import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
@@ -75,13 +75,7 @@ class Login extends React.Component {
             </Button>
           </Grid>
           <Grid item className={cs(classes.hCentered, classes.loginGridItem)}>
-            <Button size="small" fullWidth className={classes.button}>
-              <Icon path={mdiFacebookBox} size={1} />
-              Login con Facebook
-            </Button>
-          </Grid>
-          <Grid item className={cs(classes.hCentered, classes.loginGridItem)}>
-            <FacebookButton />
+            <FacebookButton size="small" fullWidth className={classes.button} />
           </Grid>
           <Grid item className={cs(classes.hCentered, classes.loginGridItem)}>
             <Button size="small" fullWidth className={classes.buttonGridItemButton}>
