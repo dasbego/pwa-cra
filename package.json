@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
-    "start:prod": "NODE_ENV=production node ./src/server/bootstrap.js",
+    "start:prod": "yarn build && NODE_ENV=production node ./src/server/bootstrap.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -34,6 +34,7 @@
     "classnames": "2.2.6",
     "express": "^4.16.4",
     "lodash.has": "^4.5.2",
+    "morgan": "^1.9.1",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-facebook-login": "^4.1.1",

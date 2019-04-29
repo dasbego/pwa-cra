@@ -43,7 +43,7 @@ export default (req, res, next) => {
 
     const context = {}
 
-    const routes = Routes.map(({route}) => (route));
+    const routes = Routes.map(({path}) => (path));
     const match = routes.find(route => matchPath(req.path, {
       path: route,
       exact: true,

@@ -25,9 +25,5 @@ export default [{
     path: '/twitterfeed',
     component: TwitterFeed,
     exact: true
-  }, {
-    path: '*',
-    component: NotFound,
-    exact: false
   }
 ];
