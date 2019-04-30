@@ -9,6 +9,7 @@ import {
   createMuiTheme,
   createGenerateClassName,
 } from '@material-ui/core/styles';
+import { SnackbarProvider } from 'notistack';
 
 // Create a theme instance. Target Defult Theme
 const theme = createMuiTheme({
@@ -23,7 +24,9 @@ ReactDOM.hydrate(
   (<Router>
     <JssProvider generateClassName={generateClassName}>
       <MuiThemeProvider theme={theme}>
-        <App />
+        <SnackbarProvider maxSnack={3}>
+          <App />
+        </SnackbarProvider>
       </MuiThemeProvider>
     </JssProvider>
   </Router>),
