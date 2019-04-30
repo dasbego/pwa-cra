@@ -6,14 +6,21 @@ import FormLabel from '@material-ui/core/FormLabel'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import FormControl from '@material-ui/core/FormControl'
+import InputAdornment from '@material-ui/core/InputAdornment'
 import Select from '@material-ui/core/Select'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
 import Button from '@material-ui/core/Button'
+import Cls from 'classnames'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import IconButton from '@material-ui/core/IconButton'
+import { MenuItem } from '@material-ui/core'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import Styles from './styles'
 // TODO: Change mocked values
 import shoesBrands from './shoesBrands'
-import { MenuItem } from '@material-ui/core';
+import { signupUser } from '../../libraries/api'
 
 class Signup extends React.Component {
   state = {
@@ -21,20 +28,34 @@ class Signup extends React.Component {
     lastName: '',
     userName: '',
     password: '',
+    showPassword: false,
     age: '',
     sex: '',
     favoriteBrand: '',
-    selectLabelWidth: 0
+    selectLabelWidth: 0,
+    sexLabelWidth: 0,
+    isLoading: false
   }
 
   componentDidMount() {
     this.setState({
       selectLabelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
+      sexLabelWidth: ReactDOM.findDOMNode(this.sexLabelRef).offsetWidth
     });
   }
 
-  onSubmit = () => {
-    console.log('submited')
+  onSubmit = (event) => {
+    event.preventDefault();
+    const {
+      firstName, lastName, userName, password,
+      favoriteBrand, age, sex,
+    } = this.state;
+    const reqData = {
+      firstName, lastName, userName,
+      password, favoriteBrand, age, sex 
+    }
+    signupUser(reqData)
+    .then(res => { console.log(res) })
   }
 
   onInputChange = ({ currentTarget: { id, value }}) => {
@@ -43,14 +64,21 @@ class Signup extends React.Component {
     })
   }
 
-  onSelectChange = ({ currentTarget: {id, value }}) => {
-    console.log('¡hola')
+  onSelectChange = ({ target: { name, value }}) => {
+    this.setState({
+      [name]: value
+    })
+  }
+  
+  handleClickShowPassword = () => {
+    this.setState(prev => this.setState({ showPassword: !prev.showPassword }))
   }
 
   render() {
     const {
       firstName, lastName, userName,
-      password, age, sex, favoriteBrand
+      password, age, sex, favoriteBrand,
+      isLoading
     } = this.state
     const cs = this.props.classes;
 
@@ -92,34 +120,68 @@ class Signup extends React.Component {
         <FormControl margin="dense">
           <TextField
             id="password"
-            type="password"
+            className={Cls(cs.margin, cs.textField)}
             variant="outlined"
+            type={this.state.showPassword ? 'text' : 'password'}
             label="Contraseña"
             value={password}
             onChange={this.onInputChange}
-            required
+            pattern="/^[a-zA-Z0-9!@#\$%\^\&*_=+-]{8,12}$/g"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="Toggle password visibility"
+                    onClick={this.handleClickShowPassword}
+                  >
+                    {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
         </FormControl>
         <FormControl margin="dense">
           <TextField
             id="age"
-            type="number"
             variant="outlined"
             label="Edad"
             value={age}
             onChange={this.onInputChange}
-            required
+            type="number"
+            pattern="[0-9]*"
+            inputMode="tel"
           />
         </FormControl>
-        <FormControl margin="dense">
-          <TextField
-            id="sex"
-            variant="outlined"
-            label="Sexo"
-            value={sex}
-            onChange={this.onInputChange}
-            required
-          />
+        <FormControl margin="dense" variant="outlined">
+          <InputLabel
+              htmlFor="sex"
+              ref={ref => {
+                this.sexLabelRef = ref;
+              }}
+              style={{ marginTop: '1rem' }}
+            >
+              Sexo
+            </InputLabel>
+            <Select
+              id="sex"
+              name="sex"
+              value={sex}
+              onChange={this.onSelectChange}
+              variant="outlined"
+              className={cs.selectEmpty}
+              input={
+                <OutlinedInput
+                  labelWidth={this.state.sexLabelWidth}
+                  name="sex"
+                  id="sex-select"
+                />
+              }
+            >
+            <MenuItem value="M">Masculino</MenuItem>
+            <MenuItem value="F">Femenino</MenuItem>
+            <MenuItem value="O">Otro</MenuItem>
+          </Select>
         </FormControl>
         <FormControl margin="dense" variant="outlined">
           <InputLabel
@@ -132,8 +194,8 @@ class Signup extends React.Component {
             Marca de tenis preferida
           </InputLabel>
           <Select
-            id="favBrand"
-            name="favBrand"
+            id="favoriteBrand"
+            name="favoriteBrand"
             value={favoriteBrand}
             onChange={this.onSelectChange}
             variant="outlined"
@@ -145,23 +207,28 @@ class Signup extends React.Component {
                 id="favorite-brand"
               />
             }
-            required
           >
             {
               shoesBrands.map(brand => (
-                <MenuItem key={brand.id} value={brand.id}>{brand.name}</MenuItem>
+                <MenuItem key={brand.id} value={brand.name}>{brand.name}</MenuItem>
               ))
             }
           </Select>
         </FormControl>
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          className={cs.formButton}
-        >
-          Crear usuario
-        </Button>
+        <FormControl className={Cls(
+          cs.FormControlProgress,
+          isLoading ? cs.loading : ''
+          )}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={cs.formButton}
+          >
+            Crear usuario
+          </Button>
+          {isLoading && (<CircularProgress size={24} className={cs.buttonProgress} />)}
+        </FormControl>
       </form>
     )
   }

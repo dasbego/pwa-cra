@@ -6,7 +6,8 @@ export default theme => ({
     margin: '1rem auto 5rem'
   },
   formButton: {
-    marginTop: '1rem'
+    marginTop: '1rem',
+    width: '100%'
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
@@ -15,4 +16,20 @@ export default theme => ({
     margin: theme.spacing.unit,
     minWidth: 120,
   },
+  formControlProgress: {
+    position: 'relative'
+  },
+  buttonProgress: {
+    position: 'absolute',
+    bottom: '0.3rem',
+    color: '#fffffc'
+  },
+  FormControlProgress: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  loading: {
+    
+  }
 });
