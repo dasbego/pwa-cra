@@ -13,6 +13,7 @@ import { withRouter } from 'react-router-dom';
 
 import Styles from './styles';
 import FacebookButton from '../FacebookButton';
+import { loginUser } from '../../libraries/api';
 
 class Login extends React.Component {
   state = {
@@ -27,8 +28,11 @@ class Login extends React.Component {
   }
 
   login = () => {
-    console.log('login click')
-    this.props.history.push('/events')
+    const { username, password } = this.state;
+    loginUser(username, password)
+      .then((res) => {
+        this.props.history.push('/events');
+      })
   }
 
   render() {
