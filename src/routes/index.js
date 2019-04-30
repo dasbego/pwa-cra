@@ -9,6 +9,10 @@ export default [{
     component: Login,
     exact: true
   }, {
+    path: '/signup',
+    component: Login,
+    exact: true
+  }, {
     path: '/events',
     component: Events,
     exact: true

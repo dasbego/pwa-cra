@@ -1,7 +1,10 @@
 import React from 'react';
-import Login from '../../components/Login';
 import { withStyles } from '@material-ui/core/styles';
 import Logo from '../../images/logo.svg';
+import { Switch, Route } from 'react-router-dom';
+
+import Login from '../../components/Login';
+import Signup from '../../components/Signup';
 
 const LoginPage = ({ classes }) => {
   return (
@@ -9,7 +12,10 @@ const LoginPage = ({ classes }) => {
       <header className={classes.container}>
         <img alt="logo" src={Logo} />
       </header>
-      <Login />
+      <Switch>
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={Signup} />
+      </Switch>
     </div>
   );
 }

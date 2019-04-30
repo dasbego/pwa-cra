@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Icon from '@mdi/react';
 import { withStyles } from '@material-ui/core/styles';
 import cs from 'classnames';
-import { mdiTwitterBox } from '@mdi/js';
+import { mdiTwitterBox, mdiAccountPlus } from '@mdi/js';
 import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
@@ -68,15 +68,18 @@ class Login extends React.Component {
         <Link to="/recover-account">
           ¿Olvidaste tu contraseña?
         </Link>
-        <Divider variant="fullWidth" />
+        <Divider className={classes.divider} />
         <Grid container direction="column" className={classes.loginGrid}>
           <Grid item className={cs(classes.hCentered, classes.loginGridItem)}>
-            <Button size="small" fullWidth className={classes.button}>
-              Crear cuenta
-            </Button>
+            <Link to="/signup" className={cs(classes.signupButton, classes.optionalButton)}>
+              <Button size="small" fullWidth className={classes.button}>
+                <Icon path={mdiAccountPlus} size={1} />
+                Crear cuenta
+              </Button>
+            </Link>
           </Grid>
           <Grid item className={cs(classes.hCentered, classes.loginGridItem)}>
-            <FacebookButton size="small" fullWidth className={classes.button} />
+            <FacebookButton size="small" fullWidth />
           </Grid>
           <Grid item className={cs(classes.hCentered, classes.loginGridItem)}>
             <Button size="small" fullWidth className={classes.buttonGridItemButton}>

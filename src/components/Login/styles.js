@@ -25,9 +25,6 @@ export default theme => ({
   buttonGrid: {
     padding: '2rem 2rem',
   },
-  buttonGridItem: {
-    margin: '0.3rem 0',
-  },
   buttonGridItemButton: {
     margin: theme.spacing.unit,
   },
@@ -40,5 +37,16 @@ export default theme => ({
     margin: '0 0.3rem',
     width: '24px',
     height: '24px'
+  },
+  signupButton: {
+    textDecoration: 'none',
+    color: 'black'
+  },
+  optionalButton: {
+    width: '100%'
+  },
+  divider: {
+    margin: '1rem 0',
+    width: '100%'
   }
 });

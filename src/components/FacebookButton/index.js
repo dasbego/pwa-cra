@@ -62,13 +62,6 @@ class FacebookButton extends Component {
 const styles = {
   fbButton: {
     width: '100%'
-    // display: 'flex',
-    // alignItems: 'center',
-    // backgroundColor: '#fff',
-    // color: 'black',
-    // fontWeight: '400',
-    // fontSize: '0.875rem',
-    // border: 'none'
   }
 }
 
