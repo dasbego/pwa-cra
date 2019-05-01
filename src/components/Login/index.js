@@ -16,10 +16,13 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import IconButton from '@material-ui/core/IconButton'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import Styles from './styles';
 import FacebookButton from '../FacebookButton';
 import { loginUser } from '../../libraries/api';
+import { updateUserProfile } from '../../store/actions/userProfile';
 
 class Login extends React.Component {
   state = {
@@ -48,6 +51,7 @@ class Login extends React.Component {
           autoHideDuration: 5000
         });
         this.saveToken(body.token);
+        this.props.updateUserProfile(body)
         this.props.history.push('/events');
       })
       .catch(err => {
@@ -142,5 +146,10 @@ class Login extends React.Component {
   }
 }
 
+const mapDispatchToProps = dispatch => bindActionCreators({
+  updateUserProfile,
+}, dispatch);
+
 const CompWithRouter = withRouter(withSnackbar(Login));
-export default withStyles(Styles)(CompWithRouter);
+const CompWithStyles = withStyles(Styles)(CompWithRouter);
+export default connect(null, mapDispatchToProps)(CompWithStyles);
