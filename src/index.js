@@ -25,14 +25,14 @@ const generateClassName = createGenerateClassName();
 
 ReactDOM.hydrate(
   (<Router>
-    <Provider store={configureStore()}>
       <JssProvider generateClassName={generateClassName}>
         <MuiThemeProvider theme={theme}>
           <SnackbarProvider maxSnack={3}>
-            <App />
+            <Provider store={configureStore()}>
+              <App />
+            </Provider>
           </SnackbarProvider>
         </MuiThemeProvider>
       </JssProvider>
-    </Provider>
   </Router>),
   document.getElementById('root'));

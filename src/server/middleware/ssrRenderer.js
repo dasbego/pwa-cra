@@ -1,6 +1,6 @@
-import React from 'react'
-import ReactDOMServer from 'react-dom/server'
-import { matchPath, StaticRouter } from 'react-router'
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { matchPath, StaticRouter } from 'react-router';
 import { SheetsRegistry } from 'jss';
 import JssProvider from 'react-jss/lib/JssProvider';
 import {
@@ -8,8 +8,10 @@ import {
   createMuiTheme,
   createGenerateClassName,
 } from '@material-ui/core/styles';
-import Routes from '../../routes';
+import { Provider as ReduxProvider } from 'react-redux';
+import { SnackbarProvider } from 'notistack';
 
+import Routes from '../../routes';
 // import our main App component
 import App from '../../App';
 
@@ -26,7 +28,7 @@ function renderFullPage(target, ssrHtml, css) {
   )
 }
 
-export default (req, res, next) => {
+export default (store) => (req, res, next) => {
     // Create a sheetsRegistry instance.
     const sheetsRegistry = new SheetsRegistry();
   
@@ -67,7 +69,11 @@ export default (req, res, next) => {
           <StaticRouter location={req.url} context={context}>
             <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
               <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
-                  <App />
+                <SnackbarProvider maxSnack={3}>
+                  <ReduxProvider store={store}>
+                    <App />
+                  </ReduxProvider>
+                </SnackbarProvider> 
               </MuiThemeProvider>
             </JssProvider>
           </StaticRouter>
