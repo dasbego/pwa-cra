@@ -44,4 +44,12 @@ export const loginUserWithFb = (FacebookToken) => request(
   }
 )
 
+export const completeFbRegistration = (userProfile) => request(
+  'post', '/api/user/registerExternal', {
+    data: {
+      ...userProfile
+    }
+  }
+)
+
 export default getEventById;

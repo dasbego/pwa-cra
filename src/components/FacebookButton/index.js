@@ -24,10 +24,6 @@ class FacebookButton extends Component {
       .then(({ status, data }) => {
         if (status === 200) {
           if (data.message) {
-            this.props.enqueueSnackbar(data.message, {
-              variant: 'info',
-              autoHideDuration: 5000
-            });
             this.props.updateUserProfile(data.body);
             this.props.history.push('/register');
           } else {

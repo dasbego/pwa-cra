@@ -20,18 +20,19 @@ import { withSnackbar } from 'notistack';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateUserProfile } from '../../store/actions/userProfile';
+import { withRouter } from 'react-router-dom';
 
 import Styles from './styles'
 // TODO: Change mocked values
 import shoesBrands from './shoesBrands';
-import { signupUser } from '../../libraries/api';
+import { signupUser, completeFbRegistration } from '../../libraries/api';
 import { routerPaths } from '../../routes';
 
 class Signup extends React.Component {
   state = {
-    firstName: this.props.firstName || '',
-    lastName: this.props.lastName || '',
-    userName: this.props.userName || '',
+    firstName: this.props.userProfile.firstName || '',
+    lastName: this.props.userProfile.lastName || '',
+    userName: this.props.userProfile.userName || '',
     password: '',
     showPassword: false,
     age: '',
@@ -41,7 +42,8 @@ class Signup extends React.Component {
     sexLabelWidth: 0,
     isLoading: false,
     submitButtonText: this.props.submitButtonText || 'Unirse ahora',
-    formTitle: this.props.formTitle || 'Crear cuenta'
+    formTitle: this.props.formTitle || 'Crear cuenta',
+    mode: this.props.mode || 'create'
   }
 
   componentDidMount() {
@@ -57,6 +59,32 @@ class Signup extends React.Component {
 
   onSubmit = (event) => {
     event.preventDefault();
+    if (this.props.mode === 'create') {
+      this.signupUser();
+    } else if (this.props.mode === 'edit') {
+      this.registerExternal();
+    }
+  }
+
+  registerExternal = () => {
+    const { age, sex, favoriteBrand } = this.state;
+    completeFbRegistration({
+      ...this.props.userProfile,
+      age, sex, favoriteBrand
+    })
+      .then((res) => {
+        this.persistUserData(res.data.body);
+        this.sendInfoSnack(res.data.message);
+        this.props.history.push(routerPaths.events);
+      });
+  }
+
+  persistUserData = (userProfile) => {
+    this.saveToken(userProfile.token)
+    this.props.updateUserProfile(userProfile);
+  }
+
+  signupUser = () => {
     const {
       firstName, lastName, userName, password,
       favoriteBrand, age, sex
@@ -67,16 +95,12 @@ class Signup extends React.Component {
     }
     signupUser(reqData)
       .then(({data}) => {
-        this.saveToken(data.body.token)
-        this.props.updateUserProfile(data.body);
+        this.persistUserData(data.body);
         this.props.enqueueSnackbar('Usuario creado', {
           variant: 'success',
           autoHideDuration: 5000
         })
-        this.props.enqueueSnackbar(data.message, {
-          variant: 'info',
-          autoHideDuration: 5000
-        })
+        this.sendInfoSnack(data.message)
         this.props.history.push(routerPaths.events);
       })
   }
@@ -90,6 +114,13 @@ class Signup extends React.Component {
   onSelectChange = ({ target: { name, value }}) => {
     this.setState({
       [name]: value
+    })
+  }
+
+  sendInfoSnack = (message) => {
+    this.props.enqueueSnackbar(message, {
+      variant: 'info',
+      autoHideDuration: 5000
     })
   }
   
@@ -263,7 +294,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 export default withStyles(Styles)(
-  withSnackbar(
-    connect(null, mapDispatchToProps)(Signup)
+  withRouter(
+    withSnackbar(
+      connect(null, mapDispatchToProps)(Signup)
+    )
   )
 );

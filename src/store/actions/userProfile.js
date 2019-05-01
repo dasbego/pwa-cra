@@ -10,6 +10,7 @@ export const updateUserProfile = ({
   age,
   sex,
   favoriteBrand,
+  image64
 }) => ({
   type: USER_UPDATE_PROFILE,
   payload: {
@@ -18,7 +19,8 @@ export const updateUserProfile = ({
     userName,
     age,
     sex,
-    favoriteBrand
+    favoriteBrand,
+    image: image64
   }
 });
 

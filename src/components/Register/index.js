@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 const Register = (props) => {
   return (<UserForm
-    {...props.userProfile}
+    userProfile={props.userProfile}
     mode="edit"
     formTitle="Completar registro"
     submitButtonText="Continuar"
