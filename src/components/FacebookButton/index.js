@@ -24,14 +24,15 @@ class FacebookButton extends Component {
       .then(({ status, data }) => {
         if (status === 200) {
           if (data.message) {
-            this.props.updateUserProfile(data.body);
-            this.props.history.push('/register');
-          } else {
             this.props.enqueueSnackbar(data.message, {
-              variant: 'success',
+              variant: 'info',
               autoHideDuration: 5000
             });
+            this.saveToken(data.body.token)
             this.props.history.push('/events');
+          } else {
+            this.props.updateUserProfile(data.body);
+            this.props.history.push('/register');
           }
         }
       })
@@ -41,6 +42,10 @@ class FacebookButton extends Component {
           autoHideDuration: 5000
         });
       })
+  }
+
+  saveToken = (token) => {
+    sessionStorage.setItem('sess_tk', token);
   }
 
   render() {

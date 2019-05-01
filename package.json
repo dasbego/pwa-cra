@@ -2,6 +2,7 @@
   "name": "testcra",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://sneakerfever.net/sand",
   "scripts": {
     "start": "react-scripts start",
     "start:prod": "yarn build && NODE_ENV=production node ./src/server/bootstrap.js",

@@ -66,7 +66,7 @@ export default (store) => (req, res, next) => {
         }
 
         const html = ReactDOMServer.renderToString(
-          <StaticRouter location={req.url} context={context}>
+          <StaticRouter basename="/sand" location={req.url} context={context}>
             <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
               <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
                 <SnackbarProvider maxSnack={3}>
