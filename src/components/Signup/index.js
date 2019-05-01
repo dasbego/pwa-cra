@@ -17,6 +17,9 @@ import IconButton from '@material-ui/core/IconButton';
 import { MenuItem } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withSnackbar } from 'notistack';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { updateUserProfile } from '../../store/actions/userProfile';
 
 import Styles from './styles'
 // TODO: Change mocked values
@@ -48,6 +51,10 @@ class Signup extends React.Component {
     });
   }
 
+  saveToken = (token) => {
+    sessionStorage.setItem('sess_tk', token);
+  }
+
   onSubmit = (event) => {
     event.preventDefault();
     const {
@@ -60,6 +67,8 @@ class Signup extends React.Component {
     }
     signupUser(reqData)
       .then(({data}) => {
+        this.saveToken(data.body.token)
+        this.props.updateUserProfile(data.body);
         this.props.enqueueSnackbar('Usuario creado', {
           variant: 'success',
           autoHideDuration: 5000
@@ -249,4 +258,12 @@ class Signup extends React.Component {
   }
 }
 
-export default withStyles(Styles)(withSnackbar(Signup));
+const mapDispatchToProps = dispatch => bindActionCreators({
+  updateUserProfile
+}, dispatch);
+
+export default withStyles(Styles)(
+  withSnackbar(
+    connect(null, mapDispatchToProps)(Signup)
+  )
+);
