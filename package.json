@@ -42,9 +42,12 @@
     "react-facebook-login": "^4.1.1",
     "react-instagram-embed": "^1.5.0",
     "react-jss": "^8.6.1",
+    "react-redux": "^7.0.3",
     "react-router-dom": "5.0.0",
     "react-scripts": "3.0.0",
-    "react-twitter-embed": "^2.0.7"
+    "react-twitter-embed": "^2.0.7",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
@@ -52,6 +55,7 @@
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.4.4",
-    "ignore-styles": "^5.0.1"
+    "ignore-styles": "^5.0.1",
+    "redux-devtools-extension": "^2.13.8"
   }
 }
