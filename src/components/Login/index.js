@@ -42,8 +42,8 @@ class Login extends React.Component {
     event.preventDefault();
     const { username, password } = this.state;
     loginUser(username, password)
-      .then(({ data: { body } }) => {
-        this.props.enqueueSnackbar(`Welcome back ${body.firstName}!`, {
+      .then(({ data: { body, message } }) => {
+        this.props.enqueueSnackbar(message, {
           variant: 'info',
           autoHideDuration: 5000
         });

@@ -36,4 +36,12 @@ export const loginUser = (userName, password) => request(
   }
 )
 
+export const loginUserWithFb = (FacebookToken) => request(
+  'post', '/api/user/loginFacebook', {
+    data: {
+      FacebookToken
+    }
+  }
+)
+
 export default getEventById;

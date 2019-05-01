@@ -4,6 +4,9 @@ import { mdiFacebookBox } from '@mdi/js';
 import Icon from '@mdi/react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { loginUserWithFb } from '../../libraries/api';
+import { withSnackbar } from 'notistack';
+import { withRouter } from 'react-router-dom';
 
 class FacebookButton extends Component {
   state = {
@@ -11,15 +14,37 @@ class FacebookButton extends Component {
     id: '',
     name: '',
     email: '',
-    picture: '',
   }
 
   componentClicked = () => {
     console.log('clicked');
   }
 
-  responseFacebook = (response) => {
-    console.log(response);
+  responseFacebook = ({ accessToken }) => {
+    loginUserWithFb(accessToken)
+      .then(({ status, data }) => {
+        if (status === 200) {
+          if (data.message) {
+            this.props.enqueueSnackbar(data.message, {
+              variant: 'info',
+              autoHideDuration: 5000
+            });
+            this.props.history.push('/register');
+          } else {
+            this.props.enqueueSnackbar(data.message, {
+              variant: 'success',
+              autoHideDuration: 5000
+            });
+            this.props.history.push('/events');
+          }
+        }
+      })
+      .catch((err) => {
+        this.props.enqueueSnackbar(err.message, {
+          variant: 'error',
+          autoHideDuration: 5000
+        });
+      })
   }
 
   render() {
@@ -65,4 +90,4 @@ const styles = {
   }
 }
 
-export default withStyles(styles)(FacebookButton);
+export default withStyles(styles)(withRouter(withSnackbar(FacebookButton)));

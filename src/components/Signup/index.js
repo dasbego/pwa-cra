@@ -24,9 +24,9 @@ import { signupUser } from '../../libraries/api'
 
 class Signup extends React.Component {
   state = {
-    firstName: '',
-    lastName: '',
-    userName: '',
+    firstName: this.props.firstName || '',
+    lastName: this.props.lastName || '',
+    userName: this.props.userName || '',
     password: '',
     showPassword: false,
     age: '',
