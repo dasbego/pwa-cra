@@ -30,9 +30,9 @@ import { routerPaths } from '../../routes';
 
 class Signup extends React.Component {
   state = {
-    firstName: this.props.userProfile.firstName || '',
-    lastName: this.props.userProfile.lastName || '',
-    userName: this.props.userProfile.userName || '',
+    firstName: this.props.userProfile ? this.props.userProfile.firstName : '',
+    lastName: this.props.userProfile ? this.props.userProfile.lastName : '',
+    userName: this.props.userProfile ? this.props.userProfile.userName : '',
     password: '',
     showPassword: false,
     age: '',
