@@ -7,6 +7,9 @@ import Button from '@material-ui/core/Button';
 import { loginUserWithFb } from '../../libraries/api';
 import { withSnackbar } from 'notistack';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { updateUserProfile } from '../../store/actions/userProfile';
 
 class FacebookButton extends Component {
   state = {
@@ -14,10 +17,6 @@ class FacebookButton extends Component {
     id: '',
     name: '',
     email: '',
-  }
-
-  componentClicked = () => {
-    console.log('clicked');
   }
 
   responseFacebook = ({ accessToken }) => {
@@ -29,6 +28,7 @@ class FacebookButton extends Component {
               variant: 'info',
               autoHideDuration: 5000
             });
+            this.props.updateUserProfile(data.body);
             this.props.history.push('/register');
           } else {
             this.props.enqueueSnackbar(data.message, {
@@ -90,4 +90,16 @@ const styles = {
   }
 }
 
-export default withStyles(styles)(withRouter(withSnackbar(FacebookButton)));
+const mapDispatchToProps = dispatch => bindActionCreators({
+  updateUserProfile,
+}, dispatch);
+
+export default connect(null, mapDispatchToProps)(
+  withStyles(styles)(
+    withRouter(
+      withSnackbar(
+        FacebookButton
+      )
+    )
+  )
+);

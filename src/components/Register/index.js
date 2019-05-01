@@ -1,11 +1,18 @@
 import React from 'react';
 import UserForm from '../Signup';
+import { connect } from 'react-redux';
 
 const Register = (props) => {
   return (<UserForm
-    {...props}
+    {...props.userProfile}
+    mode="edit"
+    formTitle="Completar registro"
     submitButtonText="Continuar"
   />)
 }
 
-export default Register;
+const mapStateToProps = ({userProfile}) => ({
+  userProfile
+});
+
+export default connect(mapStateToProps, null)(Register);

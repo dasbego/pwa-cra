@@ -9,7 +9,7 @@ export const updateUserProfile = ({
   userName,
   age,
   sex,
-  favoriteBrand
+  favoriteBrand,
 }) => ({
   type: USER_UPDATE_PROFILE,
   payload: {

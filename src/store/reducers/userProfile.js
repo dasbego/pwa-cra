@@ -1,7 +1,6 @@
 import { USER_UPDATE_PROFILE, USER_DELETE_PROFILE } from '../ActionTypes'
 
-const initialState = {
-}
+const initialState = {}
 
 export default (state = {}, action) => {
   switch (action.type) {

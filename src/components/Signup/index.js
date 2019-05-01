@@ -1,26 +1,28 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { withStyles } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
-import FormLabel from '@material-ui/core/FormLabel'
-import InputLabel from '@material-ui/core/InputLabel'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import FormControl from '@material-ui/core/FormControl'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import Select from '@material-ui/core/Select'
-import OutlinedInput from '@material-ui/core/OutlinedInput'
-import Button from '@material-ui/core/Button'
-import Cls from 'classnames'
-import Visibility from '@material-ui/icons/Visibility'
-import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import IconButton from '@material-ui/core/IconButton'
-import { MenuItem } from '@material-ui/core'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import FormLabel from '@material-ui/core/FormLabel';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Select from '@material-ui/core/Select';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Button from '@material-ui/core/Button';
+import Cls from 'classnames';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton';
+import { MenuItem } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { withSnackbar } from 'notistack';
 
 import Styles from './styles'
 // TODO: Change mocked values
-import shoesBrands from './shoesBrands'
-import { signupUser } from '../../libraries/api'
+import shoesBrands from './shoesBrands';
+import { signupUser } from '../../libraries/api';
+import { routerPaths } from '../../routes';
 
 class Signup extends React.Component {
   state = {
@@ -34,7 +36,9 @@ class Signup extends React.Component {
     favoriteBrand: '',
     selectLabelWidth: 0,
     sexLabelWidth: 0,
-    isLoading: false
+    isLoading: false,
+    submitButtonText: this.props.submitButtonText || 'Unirse ahora',
+    formTitle: this.props.formTitle || 'Crear cuenta'
   }
 
   componentDidMount() {
@@ -48,14 +52,24 @@ class Signup extends React.Component {
     event.preventDefault();
     const {
       firstName, lastName, userName, password,
-      favoriteBrand, age, sex,
+      favoriteBrand, age, sex
     } = this.state;
     const reqData = {
       firstName, lastName, userName,
       password, favoriteBrand, age, sex 
     }
     signupUser(reqData)
-    .then(res => { console.log(res) })
+      .then(({data}) => {
+        this.props.enqueueSnackbar('Usuario creado', {
+          variant: 'success',
+          autoHideDuration: 5000
+        })
+        this.props.enqueueSnackbar(data.message, {
+          variant: 'info',
+          autoHideDuration: 5000
+        })
+        this.props.history.push(routerPaths.events);
+      })
   }
 
   onInputChange = ({ currentTarget: { id, value }}) => {
@@ -78,13 +92,14 @@ class Signup extends React.Component {
     const {
       firstName, lastName, userName,
       password, age, sex, favoriteBrand,
-      isLoading
+      isLoading, submitButtonText, formTitle
     } = this.state
     const cs = this.props.classes;
+    const { mode } = this.props;
 
     return (
       <form onSubmit={this.onSubmit} className={cs.form}>
-        <FormLabel component="legend"><b>Crear cuenta</b></FormLabel>
+        <FormLabel component="legend"><b>{formTitle}</b></FormLabel>
         <FormControl margin="dense">
           <TextField
             id="firstName"
@@ -117,30 +132,34 @@ class Signup extends React.Component {
           />
           <FormHelperText>Este será tu nombre de usuario.</FormHelperText>
         </FormControl>
-        <FormControl margin="dense">
-          <TextField
-            id="password"
-            className={Cls(cs.margin, cs.textField)}
-            variant="outlined"
-            type={this.state.showPassword ? 'text' : 'password'}
-            label="Contraseña"
-            value={password}
-            onChange={this.onInputChange}
-            pattern="/^[a-zA-Z0-9!@#\$%\^\&*_=+-]{8,12}$/g"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="Toggle password visibility"
-                    onClick={this.handleClickShowPassword}
-                  >
-                    {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </FormControl>
+        {
+          mode !== 'edit' && (
+            <FormControl margin="dense">
+              <TextField
+                id="password"
+                className={Cls(cs.margin, cs.textField)}
+                variant="outlined"
+                type={this.state.showPassword ? 'text' : 'password'}
+                label="Contraseña"
+                value={password}
+                onChange={this.onInputChange}
+                pattern="/^[a-zA-Z0-9!@#\$%\^\&*_=+-]{8,12}$/g"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="Toggle password visibility"
+                        onClick={this.handleClickShowPassword}
+                      >
+                        {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </FormControl>
+          )
+        }
         <FormControl margin="dense">
           <TextField
             id="age"
@@ -159,7 +178,6 @@ class Signup extends React.Component {
               ref={ref => {
                 this.sexLabelRef = ref;
               }}
-              style={{ marginTop: '1rem' }}
             >
               Sexo
             </InputLabel>
@@ -169,7 +187,6 @@ class Signup extends React.Component {
               value={sex}
               onChange={this.onSelectChange}
               variant="outlined"
-              className={cs.selectEmpty}
               input={
                 <OutlinedInput
                   labelWidth={this.state.sexLabelWidth}
@@ -189,7 +206,6 @@ class Signup extends React.Component {
             ref={ref => {
               this.InputLabelRef = ref;
             }}
-            style={{ marginTop: '1rem' }}
           >
             Marca de tenis preferida
           </InputLabel>
@@ -199,7 +215,6 @@ class Signup extends React.Component {
             value={favoriteBrand}
             onChange={this.onSelectChange}
             variant="outlined"
-            className={cs.selectEmpty}
             input={
               <OutlinedInput
                 labelWidth={this.state.selectLabelWidth}
@@ -225,7 +240,7 @@ class Signup extends React.Component {
             color="primary"
             className={cs.formButton}
           >
-            Crear usuario
+            {submitButtonText}
           </Button>
           {isLoading && (<CircularProgress size={24} className={cs.buttonProgress} />)}
         </FormControl>
@@ -234,4 +249,4 @@ class Signup extends React.Component {
   }
 }
 
-export default withStyles(Styles)(Signup);
+export default withStyles(Styles)(withSnackbar(Signup));
