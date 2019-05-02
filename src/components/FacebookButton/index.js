@@ -68,6 +68,7 @@ class FacebookButton extends Component {
         callback={this.responseFacebook}
         textButton="Login con Facebook"
         cssClass={classes.fbButton}
+        disableMobileRedirect={true}
         render={renderProps => (
           <Button
             className={classes.fbButton}
