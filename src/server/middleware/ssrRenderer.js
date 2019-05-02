@@ -57,7 +57,7 @@ export default (store) => (req, res, next) => {
     }
 
     // point to the html file created by CRA's build tool
-    const filePath = path.resolve(__dirname, '..', '..', '..','build', 'index.html');
+    const filePath = path.resolve(__dirname, '..', '..', '..', 'build', 'index.html');
 
     fs.readFile(filePath, 'utf8', (err, htmlData) => {
         if (err) {
@@ -66,7 +66,7 @@ export default (store) => (req, res, next) => {
         }
 
         const html = ReactDOMServer.renderToString(
-          <StaticRouter basename="/sand" location={req.url} context={context}>
+          <StaticRouter location={req.url} context={context}>
             <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
               <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
                 <SnackbarProvider maxSnack={3}>
