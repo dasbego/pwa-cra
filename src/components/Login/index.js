@@ -23,6 +23,7 @@ import Styles from './styles';
 import FacebookButton from '../FacebookButton';
 import { loginUser } from '../../libraries/api';
 import { updateUserProfile } from '../../store/actions/userProfile';
+import { setLoadingMessage, hideLoading } from '../../store/actions/loading';
 
 class Login extends React.Component {
   state = {
@@ -44,8 +45,10 @@ class Login extends React.Component {
   login = (event) => {
     event.preventDefault();
     const { username, password } = this.state;
+    this.props.setLoadingMessage('Ingresando');
     loginUser(username, password)
       .then(({ data: { body, message } }) => {
+        this.props.hideLoading();
         this.props.enqueueSnackbar(message, {
           variant: 'info',
           autoHideDuration: 5000
@@ -55,6 +58,7 @@ class Login extends React.Component {
         this.props.history.push('/events');
       })
       .catch(err => {
+        this.props.hideLoading()
         this.props.enqueueSnackbar(`${err.message}`, {
           variant: 'error',
           autoHideDuration: 5000
@@ -148,6 +152,8 @@ class Login extends React.Component {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   updateUserProfile,
+  setLoadingMessage,
+  hideLoading
 }, dispatch);
 
 const CompWithRouter = withRouter(withSnackbar(Login));
