@@ -62,8 +62,9 @@ class Signup extends React.Component {
     event.preventDefault();
     if (this.props.mode === 'edit') {
       this.registerExternal();
+    } else {
+      this.signupUser();
     }
-    this.signupUser();
   }
 
   registerExternal = () => {
@@ -74,6 +75,7 @@ class Signup extends React.Component {
       age, sex, favoriteBrand
     })
       .then((res) => {
+        this.props.hideLoading();
         this.persistUserData(res.data.body);
         this.sendSnack('info', res.data.message);
         this.props.history.push(routerPaths.events);

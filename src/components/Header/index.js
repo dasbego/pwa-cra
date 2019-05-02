@@ -91,7 +91,7 @@ class Header extends React.Component {
       }];
     } else {
       drawerOptions = [{
-        name: 'Logout',
+        name: 'Salir',
         onClick: () => this.logout(),
         icon: mdiPower
       }];

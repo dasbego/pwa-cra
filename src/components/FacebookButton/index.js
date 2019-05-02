@@ -23,11 +23,11 @@ class FacebookButton extends Component {
         this.props.hideLoading()
         if (status === 200) {
           this.props.updateUserProfile(data.body);
-          if (data.message) {
-            this.props.enqueueSnackbar(data.message, {
-              variant: 'info',
-              autoHideDuration: 5000
-            });
+          this.props.enqueueSnackbar(data.message, {
+            variant: 'info',
+            autoHideDuration: 5000
+          });
+          if (data.body.token) {
             this.saveToken(data.body.token)
             this.props.history.push('/events');
           } else {

@@ -11,7 +11,7 @@ const Event = (props) => {
 
   return (
     <Paper className={classes.container}>
-      <Link to={`/event/${data.id}`} className={classes.cardLink}>
+      <Link to={`/event/${data.eventBaseId}`} className={classes.cardLink}>
         <div className={classes.imgContainer}>
           <img alt="placeholder" className={classes.img} src={base64ToSrc(data.image)} />
         </div>
