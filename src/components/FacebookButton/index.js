@@ -22,6 +22,7 @@ class FacebookButton extends Component {
       .then(({ status, data }) => {
         this.props.hideLoading()
         if (status === 200) {
+          debugger;
           this.props.updateUserProfile(data.body);
           this.props.enqueueSnackbar(data.message, {
             variant: 'info',

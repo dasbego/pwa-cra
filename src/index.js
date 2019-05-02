@@ -8,11 +8,12 @@ import {
   createGenerateClassName,
 } from '@material-ui/core/styles';
 import { SnackbarProvider } from 'notistack';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import './index.css';
 import App from './App';
-import configureStore from './store';
+import { configureStore, persistor } from './store';
 
 // Create a theme instance. Target Defult Theme
 const theme = createMuiTheme({
@@ -28,8 +29,10 @@ ReactDOM.hydrate(
       <JssProvider generateClassName={generateClassName}>
         <MuiThemeProvider theme={theme}>
           <SnackbarProvider maxSnack={3}>
-            <Provider store={configureStore()}>
-              <App />
+            <Provider store={configureStore}>
+              <PersistGate persistor={persistor}>
+                <App />
+              </PersistGate>
             </Provider>
           </SnackbarProvider>
         </MuiThemeProvider>
