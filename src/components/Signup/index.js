@@ -68,6 +68,7 @@ class Signup extends React.Component {
 
   registerExternal = () => {
     const { age, sex, favoriteBrand } = this.state;
+    this.props.setLoadingMessage('Completando registro');
     completeFbRegistration({
       ...this.props.userProfile,
       age, sex, favoriteBrand
@@ -76,6 +77,10 @@ class Signup extends React.Component {
         this.persistUserData(res.data.body);
         this.sendSnack('info', res.data.message);
         this.props.history.push(routerPaths.events);
+      })
+      .catch(err => {
+        this.props.hideLoading();
+        this.sendSnack('error', err);
       });
   }
 
