@@ -1,8 +1,7 @@
 import Login from '../pages/Home';
 import Events from '../pages/Events';
 import EventDetail from '../pages/EventDetail';
-import InstaFeed from '../pages/InstagramFeed';
-import TwitterFeed from '../pages/TwitterFeed';
+import News from '../pages/News';
 
 const routes = [{
     path: '/login',
@@ -25,12 +24,16 @@ const routes = [{
     component: EventDetail,
     exact: true
   }, {
-    path: '/instafeed',
-    component: InstaFeed,
+    path: '/news',
+    component: News,
+    exact: false
+  },  {
+    path: '/news/instagram',
+    component: News,
     exact: true
   }, {
-    path: '/twitterfeed',
-    component: TwitterFeed,
+    path: '/news/twitter',
+    component: News,
     exact: true
   }
 ];

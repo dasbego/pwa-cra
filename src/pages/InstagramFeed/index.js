@@ -1,7 +1,6 @@
 import React from 'react';
 import InstagramEmbed from 'react-instagram-embed';
 import { withStyles } from '@material-ui/core/styles';
-import Header from '../../components/Header';
 
 const styles = {
   container: {
@@ -10,23 +9,20 @@ const styles = {
 }
 
 const InstagramFeed = (props) => (
-  <>
-    <Header />
-    <div className={props.classes.container}>
-      <InstagramEmbed
-        url='https://www.instagram.com/p/Bw0CSXOH6RI/'
-        hideCaption={false}
-        containerTagName='div'
-        protocol=''
-        injectScript
-        onLoading={() => {}}
-        onSuccess={() => {}}
-        onAfterRender={() => {}}
-        onFailure={() => {}}
-        style={{ display: 'flex', justifyContent: 'center' }}
-      />
-    </div>
-  </>
+  <div className={props.classes.container}>
+    <InstagramEmbed
+      url='https://www.instagram.com/p/Bw0CSXOH6RI/'
+      hideCaption={false}
+      containerTagName='div'
+      protocol=''
+      injectScript
+      onLoading={() => {}}
+      onSuccess={() => {}}
+      onAfterRender={() => {}}
+      onFailure={() => {}}
+      style={{ display: 'flex', justifyContent: 'center' }}
+    />
+  </div>
 );
 
 export default withStyles(styles)(InstagramFeed);

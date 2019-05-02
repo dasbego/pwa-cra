@@ -1,6 +1,5 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Header from '../../components/Header';
 import { TwitterTimelineEmbed } from 'react-twitter-embed';
 
 const styles = {
@@ -9,17 +8,14 @@ const styles = {
   }
 }
 
-const InstagramFeed = (props) => (
-  <>
-    <Header />
-    <div className={props.classes.container}>
+const TwitterFeed = (props) => (
+  <div className={props.classes.container}>
     <TwitterTimelineEmbed
       sourceType="profile"
       screenName="sneakerfevermx"
       options={{height: '100vh'}}
     />
-    </div>
-  </>
+  </div>
 );
 
-export default withStyles(styles)(InstagramFeed);
+export default withStyles(styles)(TwitterFeed);

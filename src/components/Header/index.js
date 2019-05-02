@@ -1,6 +1,9 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { mdiMenu, mdiAccount } from '@mdi/js';
+import {
+  mdiMenu, mdiAccount, mdiCalendarStar,
+  mdiNewspaper, mdiPower
+} from '@mdi/js';
 import Icon from '@mdi/react';
 import Button from '@material-ui/core/Button';
 import Logo from '../../images/logo.svg';
@@ -9,8 +12,11 @@ import Grid from '@material-ui/core/Grid';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+
+import { routerPaths } from '../../routes';
 
 const styles = {
   root: {
@@ -31,6 +37,9 @@ const styles = {
     width: '60px',
     height: '60px',
     borderRadius: '50%'
+  },
+  drawerItem: {
+    maxHeight: '70px'
   }
 }
 
@@ -56,15 +65,21 @@ class Header extends React.Component {
     let drawerOptions;
     if (option === 'menu') {
       drawerOptions = [{
+        name: 'Eventos',
+        onClick: () => this.props.history.push(routerPaths.events),
+        icon: mdiCalendarStar
+      }, {
         name: 'Noticias',
-        onClick: () => this.props.history.push('/noticias'),
+        onClick: () => this.props.history.push(routerPaths.news),
+        icon: mdiNewspaper
       }];
     } else {
       drawerOptions = [{
-        name: 'logout',
+        name: 'Logout',
         onClick: () => {
 
-        }
+        },
+        icon: mdiPower
       }];
     }
     this.setState({ drawerOptions });
@@ -94,10 +109,11 @@ class Header extends React.Component {
             anchor="bottom" 
           >
             <List>
+              <ListSubheader>Menu</ListSubheader>
               {
                 this.state.drawerOptions.map(option => (
-                  <ListItem button key={option.url} onClick={option.onClick}>
-                    {option.icon && (<ListItemIcon>ass</ListItemIcon>)}
+                  <ListItem className={cs.drawerItem} button key={option.name} onClick={option.onClick}>
+                    {option.icon && (<ListItemIcon><Icon path={option.icon} size={1}/></ListItemIcon>)}
                     <ListItemText primary={option.name} />
                   </ListItem>
                 ))
