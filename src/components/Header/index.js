@@ -16,11 +16,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Avatar from '@material-ui/core/Avatar';
 
 import { routerPaths } from '../../routes';
 import Logo from '../../images/logo.svg';
 import { logout } from '../../libraries/api';
 import { setLoadingMessage, hideLoading } from '../../store/actions/loading';
+import { base64ToSrc } from '../../libraries/utils';
 
 const styles = {
   root: {
@@ -112,7 +114,10 @@ class Header extends React.Component {
             <img className={cs.headerLogo} src={Logo} alt="logo" />
           </Link>
           <Button className={cs.headerButton} onClick={() => this.setDrawerOptions('profile')}>
-            <Icon path={mdiAccount} size={1} />
+            {this.props.image ? (
+                <Avatar src={base64ToSrc(this.props.image)} />
+              ) : (
+                <Icon path={mdiAccount} size={1} />)}
           </Button>
         </Grid>
         {
@@ -139,11 +144,15 @@ class Header extends React.Component {
   }
 }
 
+const mapStateToProps = ({ userProfile: { image }}) => ({
+  image
+});
+
 const mapDispatchToProps = dispatch => bindActionCreators({
   setLoadingMessage,
   hideLoading
 }, dispatch);
 
 export default withStyles(styles)(
-  withRouter(connect(null, mapDispatchToProps)(Header))
+  withRouter(connect(mapStateToProps, mapDispatchToProps)(Header))
 );

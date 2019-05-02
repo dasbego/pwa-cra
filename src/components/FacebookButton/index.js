@@ -15,9 +15,6 @@ import { setLoadingMessage, hideLoading } from '../../store/actions/loading';
 class FacebookButton extends Component {
   state = {
     isLoggedIn: false,
-    id: '',
-    name: '',
-    email: '',
   }
 
   responseFacebook = ({ accessToken }) => {
@@ -25,6 +22,7 @@ class FacebookButton extends Component {
       .then(({ status, data }) => {
         this.props.hideLoading()
         if (status === 200) {
+          this.props.updateUserProfile(data.body);
           if (data.message) {
             this.props.enqueueSnackbar(data.message, {
               variant: 'info',
@@ -33,7 +31,6 @@ class FacebookButton extends Component {
             this.saveToken(data.body.token)
             this.props.history.push('/events');
           } else {
-            this.props.updateUserProfile(data.body);
             this.props.history.push('/register');
           }
         }
