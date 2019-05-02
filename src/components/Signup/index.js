@@ -20,6 +20,7 @@ import { withSnackbar } from 'notistack';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateUserProfile } from '../../store/actions/userProfile';
+import { setLoadingMessage, hideLoading } from '../../store/actions/loading';
 import { withRouter } from 'react-router-dom';
 
 import Styles from './styles'
@@ -59,11 +60,10 @@ class Signup extends React.Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    if (this.props.mode === 'create') {
-      this.signupUser();
-    } else if (this.props.mode === 'edit') {
+    if (this.props.mode === 'edit') {
       this.registerExternal();
     }
+    this.signupUser();
   }
 
   registerExternal = () => {
@@ -74,7 +74,7 @@ class Signup extends React.Component {
     })
       .then((res) => {
         this.persistUserData(res.data.body);
-        this.sendInfoSnack(res.data.message);
+        this.sendSnack('info', res.data.message);
         this.props.history.push(routerPaths.events);
       });
   }
@@ -93,16 +93,19 @@ class Signup extends React.Component {
       firstName, lastName, userName,
       password, favoriteBrand, age, sex 
     }
+    this.props.setLoadingMessage('Registrando usuario');
     signupUser(reqData)
       .then(({data}) => {
         this.persistUserData(data.body);
-        this.props.enqueueSnackbar('Usuario creado', {
-          variant: 'success',
-          autoHideDuration: 5000
-        })
-        this.sendInfoSnack(data.message)
+        this.sendSnack('success', 'Usuario registrado exitosamente.');
+        this.sendSnack('info', data.message);
+        this.props.hideLoading();
         this.props.history.push(routerPaths.events);
       })
+      .catch(err => {
+        this.props.hideLoading();
+        this.sendSnack('info', err);
+      });
   }
 
   onInputChange = ({ currentTarget: { id, value }}) => {
@@ -117,9 +120,9 @@ class Signup extends React.Component {
     })
   }
 
-  sendInfoSnack = (message) => {
+  sendSnack = (variant, message) => {
     this.props.enqueueSnackbar(message, {
-      variant: 'info',
+      variant,
       autoHideDuration: 5000
     })
   }
@@ -290,7 +293,9 @@ class Signup extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  updateUserProfile
+  updateUserProfile,
+  setLoadingMessage,
+  hideLoading
 }, dispatch);
 
 export default withStyles(Styles)(

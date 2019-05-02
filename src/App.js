@@ -2,18 +2,22 @@ import React from 'react';
 import { Switch, Route, Redirect } from "react-router-dom";
 import './App.css';
 import Routes from './routes';
+import LoadingScreen from './components/LoadingMessage';
 
 class App extends React.Component {
   render() {
     return (
-      <Switch>
-        <Redirect exact from="/" to="/login" />
-        {
-          Routes.map(({exact, path, component}) => (
-            <Route key={path} exact={exact} path={path} component={component} />
-          ))
-        }
-      </Switch>
+      <>
+        <LoadingScreen />
+        <Switch>
+          <Redirect exact from="/" to="/login" />
+          {
+            Routes.map(({exact, path, component}) => (
+              <Route key={path} exact={exact} path={path} component={component} />
+            ))
+          }
+        </Switch>
+      </>
     );
   }
 }
