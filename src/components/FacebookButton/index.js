@@ -10,6 +10,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateUserProfile } from '../../store/actions/userProfile';
+import { setLoadingMessage, hideLoading } from '../../store/actions/loading';
 
 class FacebookButton extends Component {
   state = {
@@ -22,6 +23,7 @@ class FacebookButton extends Component {
   responseFacebook = ({ accessToken }) => {
     loginUserWithFb(accessToken)
       .then(({ status, data }) => {
+        this.props.hideLoading()
         if (status === 200) {
           if (data.message) {
             this.props.enqueueSnackbar(data.message, {
@@ -37,6 +39,7 @@ class FacebookButton extends Component {
         }
       })
       .catch((err) => {
+        this.props.hideLoading()
         this.props.enqueueSnackbar(err.message, {
           variant: 'error',
           autoHideDuration: 5000
@@ -46,6 +49,10 @@ class FacebookButton extends Component {
 
   saveToken = (token) => {
     sessionStorage.setItem('sess_tk', token);
+  }
+
+  buttonClicked = () => {
+    this.props.setLoadingMessage('Verificando cuenta');
   }
 
   render() {
@@ -60,7 +67,7 @@ class FacebookButton extends Component {
         autoLoad={false}
         fields="name,email,picture"
         scope="public_profile,user_friends"
-        onClick={this.componentClicked}
+        onClick={this.buttonClicked}
         callback={this.responseFacebook}
         textButton="Login con Facebook"
         cssClass={classes.fbButton}
@@ -93,6 +100,8 @@ const styles = {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   updateUserProfile,
+  setLoadingMessage,
+  hideLoading
 }, dispatch);
 
 export default connect(null, mapDispatchToProps)(
