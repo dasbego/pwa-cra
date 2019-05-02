@@ -4,24 +4,30 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { mdiGoogleMaps, mdiMapMarker } from '@mdi/js';
 import Icon from '@mdi/react';
+import { withRouter, Link } from 'react-router-dom';
 
 const EventDescription = (props) => {
+  const openMaps = (url) => {
+    window.location = url;
+  };
   const cs = props.classes;
-  const { location } = props;
+  const { name, address, mapsUrl } = props;
   return (
     <Paper className={cs.container}>
       <div className={cs.location}>
         <Icon path={mdiMapMarker} size={3} color="#d63f36" />
         <div>
-          <span><b>{location}</b></span>
+          <span><b>{name}</b></span>
           <br />
-          <span>Dakota s/n, Nápoles, 03810<br />Ciudad de México, México</span>
+          <span>{address}</span>
         </div>
       </div>
-      <Button className={cs.mapsLink}>
-        <Icon path={mdiGoogleMaps} size={2} color="#09a35e" />
-        <div className={cs.mapsLinkText}>Abrir en Maps</div>
-      </Button>
+      <a href={mapsUrl} rel="noopener noreferrer" target="_blank">
+        <Button className={cs.mapsLink} >
+          <Icon path={mdiGoogleMaps} size={2} color="#09a35e" />
+          <div className={cs.mapsLinkText}>Abrir en Maps</div>
+        </Button>
+      </a>
     </Paper>
   );
 }
@@ -48,4 +54,4 @@ const styles = {
   }
 }
 
-export default withStyles(styles)(EventDescription);
+export default withStyles(styles)(withRouter(EventDescription));

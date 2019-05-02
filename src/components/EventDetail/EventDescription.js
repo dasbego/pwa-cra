@@ -7,12 +7,12 @@ import Divider from '@material-ui/core/Divider';
 
 const EventDescription = (props) => {
   const cs = props.classes;
-  const { description, date } = props;
+  const { description, eventDate } = props;
   return (
     <Paper className={cs.container}>
       <div className={cs.date}>
         <Icon path={mdiCalendarStar} size={2} />
-        {date}
+        {eventDate}
       </div>
       <Divider></Divider>
       <div className={cs.content}>

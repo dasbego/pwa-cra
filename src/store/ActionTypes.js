@@ -4,3 +4,7 @@ export const USER_DELETE_PROFILE = 'USER_DELETE_PROFILE';
 
 export const LOADING_SET_MESSAGE = 'LOADING_SET_MESSAGE';
 export const LOADING_HIDE = 'LOADING_HIDE';
+
+// events
+export const EVENTS_UPDATE = 'EVENTS_UPDATE';
+export const EVENTS_CLEAR = 'EVENTS_CLEAR';

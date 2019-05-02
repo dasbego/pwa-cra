@@ -1,41 +1,36 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
-import _has from 'lodash.has';
+import { connect } from 'react-redux';
 
-import { getEventById } from '../../libraries/api';
 import Navigator from '../../components/Navigator';
 import EventDescription from '../../components/EventDetail/EventDescription';
 import EventLocation from '../../components/EventDetail/EventLocation';
+import { base64ToSrc } from '../../libraries/utils';
 
 class Event extends React.Component {
-  state = {
-    event: {}
-  }
-
-  componentDidMount() {
-    const { id } = this.props.match.params;
-    getEventById(id)
-    .then((res) => {
-      this.setState({ event: res })
-    });
-  }
-
   render () {
     const cs = this.props.classes;
-    const { event }  = this.state;
-    if (_has(event, 'id')) {
+
+    const { id } = this.props.match.params;
+    const { events } = this.props;
+    const event = events.length ? events.find(event => event.eventBaseId === parseInt(id,10)) : {}
+    if (event.eventBaseId) {
       return (
         <div>
           <Navigator />
           <div className={cs.root}>
             <img
-              src={event.image}
+              src={base64ToSrc(event.image)}
               alt={event.name}
               className={cs.imageBox}
             />
-            <EventDescription date={event.date} description={event.description} />
-            <EventLocation location={event.location} />
+            <EventDescription eventDate={event.eventDate} description={event.description} />
+            <EventLocation
+              name={event.locationName}
+              address={event.locationAddress}
+              mapsUrl={event.locationUrl}
+            />
           </div>
         </div>
       )
@@ -64,4 +59,10 @@ const styles = {
   }
 }
 
-export default withStyles(styles)(withRouter(Event));
+const mapStateToProps = ({ events }) => ({
+  events
+});
+
+export default withStyles(styles)(withRouter(
+  connect(mapStateToProps, null)(Event)
+));

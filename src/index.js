@@ -24,7 +24,7 @@ const theme = createMuiTheme({
 const generateClassName = createGenerateClassName();
 
 ReactDOM.hydrate(
-  (<Router>
+  (<Router basename="/sand">
       <JssProvider generateClassName={generateClassName}>
         <MuiThemeProvider theme={theme}>
           <SnackbarProvider maxSnack={3}>

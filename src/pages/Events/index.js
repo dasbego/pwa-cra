@@ -1,10 +1,13 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import Header from '../../components/Header';
 import EventsList from '../../components/EventsList';
 import PageContainer from '../../components/PageContainer';
 import { getEvents } from '../../libraries/api';
+import { updateEvents } from '../../store/actions/events';
 
 const styles = {
   eventsContainer: {
@@ -14,7 +17,6 @@ const styles = {
 
 class Events extends React.Component {
   state = {
-    events: [],
     isLoading: true,
   }
 
@@ -27,8 +29,8 @@ class Events extends React.Component {
       .then(res => {
         this.setState({
           isLoading: false,
-          events: res.data.body
         });
+        this.props.updateEvents(res.data.body)
       })
       .catch(err => {
         this.setState({
@@ -39,8 +41,9 @@ class Events extends React.Component {
 
   render () {
     const cs = this.props.classes;
-    const upcomingEvents = this.state.events.filter(event => !event.isExpired)
-    const pastEvents = this.state.events.filter(event => event.isExpired)
+    const { events } = this.props;
+    const upcomingEvents = events.filter(event => !event.isExpired)
+    const pastEvents = events.filter(event => event.isExpired)
     const { isLoading } = this.state;
 
     return (
@@ -57,4 +60,12 @@ class Events extends React.Component {
   }
 }
 
-export default withStyles(styles)(Events);
+const mapStateToProps = ({ events }) => ({
+  events
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  updateEvents
+}, dispatch);
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Events));

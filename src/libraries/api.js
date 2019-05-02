@@ -1,4 +1,3 @@
-import MockEvents from '../mocks/events';
 import Axios from 'axios';
 
 // General
@@ -10,13 +9,6 @@ const request = (method, url, params) => {
     ...params
   })
 }
-
-// Events
-
-export const getEventById = id => new Promise((resolve, reject) => {
-  resolve(MockEvents.find(event => event.id === id))
-});
-
 
 // Users
 
@@ -73,5 +65,3 @@ export const getEvents = () => {
     }
   });
 }
-
-export default getEventById;
