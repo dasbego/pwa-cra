@@ -34,7 +34,7 @@ export const loginUser = (userName, password) => request(
       userName, password
     }
   }
-)
+);
 
 export const loginUserWithFb = (FacebookToken) => request(
   'post', '/api/user/loginFacebook', {
@@ -42,7 +42,7 @@ export const loginUserWithFb = (FacebookToken) => request(
       FacebookToken
     }
   }
-)
+);
 
 export const completeFbRegistration = (userProfile) => request(
   'post', '/api/user/registerExternal', {
@@ -50,6 +50,14 @@ export const completeFbRegistration = (userProfile) => request(
       ...userProfile
     }
   }
-)
+);
+
+export const logout = (token) => request(
+  'get', '/api/user/logout', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+);
 
 export default getEventById;

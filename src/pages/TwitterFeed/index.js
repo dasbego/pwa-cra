@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { TwitterTimelineEmbed } from 'react-twitter-embed';
+import PageContainer from '../../components/PageContainer';
 
 const styles = {
   container: {
@@ -9,13 +10,13 @@ const styles = {
 }
 
 const TwitterFeed = (props) => (
-  <div className={props.classes.container}>
+  <PageContainer>
     <TwitterTimelineEmbed
       sourceType="profile"
       screenName="sneakerfevermx"
       options={{height: '100vh'}}
     />
-  </div>
+  </PageContainer>
 );
 
 export default withStyles(styles)(TwitterFeed);

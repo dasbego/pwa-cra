@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import {
   mdiMenu, mdiAccount, mdiCalendarStar,
@@ -6,7 +8,6 @@ import {
 } from '@mdi/js';
 import Icon from '@mdi/react';
 import Button from '@material-ui/core/Button';
-import Logo from '../../images/logo.svg';
 import { Link, withRouter } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Drawer from '@material-ui/core/Drawer';
@@ -17,6 +18,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import { routerPaths } from '../../routes';
+import Logo from '../../images/logo.svg';
+import { logout } from '../../libraries/api';
+import { setLoadingMessage, hideLoading } from '../../store/actions/loading';
 
 const styles = {
   root: {
@@ -61,6 +65,17 @@ class Header extends React.Component {
     })
   }
 
+  logout = () => {
+    const tk = sessionStorage.getItem('sess_tk');
+    this.props.setLoadingMessage('Cerrando sesión...')
+    logout(tk)
+    .then(() => {
+      this.props.hideLoading();
+      sessionStorage.removeItem('sess_tk');
+      this.props.history.push('/');
+    })
+  }
+
   setDrawerOptions = (option) => {
     let drawerOptions;
     if (option === 'menu') {
@@ -76,9 +91,7 @@ class Header extends React.Component {
     } else {
       drawerOptions = [{
         name: 'Logout',
-        onClick: () => {
-
-        },
+        onClick: this.logout,
         icon: mdiPower
       }];
     }
@@ -126,4 +139,11 @@ class Header extends React.Component {
   }
 }
 
-export default withStyles(styles)(withRouter(Header));
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setLoadingMessage,
+  hideLoading
+}, dispatch);
+
+export default withStyles(styles)(
+  withRouter(connect(null, mapDispatchToProps)(Header))
+);
