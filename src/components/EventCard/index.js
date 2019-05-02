@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { mdiMapMarker } from '@mdi/js';
 import Icon from '@mdi/react';
 import { Link } from 'react-router-dom'
+import { base64ToSrc } from '../../libraries/utils';
 
 const Event = (props) => {
   const { data, classes } = props;
@@ -12,20 +13,20 @@ const Event = (props) => {
     <Paper className={classes.container}>
       <Link to={`/event/${data.id}`} className={classes.cardLink}>
         <div className={classes.imgContainer}>
-          <img alt="placeholder" className={classes.img} src={data.thumbnail} />
+          <img alt="placeholder" className={classes.img} src={base64ToSrc(data.image)} />
         </div>
         <div className={classes.description}>
             <div className={classes.info1}>
               <span><b>{data.name}</b></span>
               <span>
                 <Icon path={mdiMapMarker} size={0.5} color="gray" />
-                {data.location}
+                {data.locationName}
               </span>
             </div>
             <div className={classes.info2}>
-              <span>{data.date}</span>
+              <span>{data.eventDate}</span>
               <span className={classes.price}>
-                <b>${data.price}</b>
+                <b>{data.ticketsFrom}</b>
               </span>
             </div>
           </div>

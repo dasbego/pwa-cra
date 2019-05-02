@@ -1,18 +1,28 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Event from '../EventCard';
+import Progress from '@material-ui/core/CircularProgress';
 
 const styles = {
+  progress: {
+    display: 'flex',
+    justifyContent: 'center',
+    minWidth: '70px'
+  }
 }
 
-const EventList = (props) => {
+const EventList = ({ title, events, isLoading, classes }) => {
   return (
     <div>
-      <h3><b>{props.title}</b></h3>
+      <h3><b>{title}</b></h3>
       {
-        props.events && props.events.map(event => (
-          <Event key={event.id} data={event} />
-        ))
+        events.length ? events.map(event => (
+          <Event key={event.eventBaseId} data={event} />
+        )) : (
+          <div className={classes.progress}>
+          { isLoading ?  <Progress /> : <div>No hay eventos</div> }
+          </div>
+        )
       }
     </div>
   );

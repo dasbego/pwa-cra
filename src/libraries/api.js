@@ -52,12 +52,26 @@ export const completeFbRegistration = (userProfile) => request(
   }
 );
 
-export const logout = (token) => request(
-  'get', '/api/user/logout', {
+export const logout = () => {
+  const token = sessionStorage.getItem('sess_tk');
+  return request(
+    'get', '/api/user/logout', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+}
+
+// events
+
+export const getEvents = () => {
+  const token = sessionStorage.getItem('sess_tk');
+  return request('get', '/api/event', {
     headers: {
       Authorization: `Bearer ${token}`
     }
-  }
-);
+  });
+}
 
 export default getEventById;

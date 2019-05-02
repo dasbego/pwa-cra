@@ -68,14 +68,13 @@ class Header extends React.Component {
   }
 
   logout = () => {
-    const tk = sessionStorage.getItem('sess_tk');
     this.props.setLoadingMessage('Cerrando sesión...')
-    logout(tk)
-    .then(() => {
-      this.props.hideLoading();
-      sessionStorage.removeItem('sess_tk');
-      this.props.history.push('/');
-    })
+    logout()
+      .then(() => {
+        this.props.hideLoading();
+        sessionStorage.removeItem('sess_tk');
+        this.props.history.push('/');
+      })
   }
 
   setDrawerOptions = (option) => {
@@ -93,7 +92,7 @@ class Header extends React.Component {
     } else {
       drawerOptions = [{
         name: 'Logout',
-        onClick: this.logout,
+        onClick: () => this.logout(),
         icon: mdiPower
       }];
     }

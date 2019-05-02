@@ -4,8 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Header from '../../components/Header';
 import EventsList from '../../components/EventsList';
 import PageContainer from '../../components/PageContainer';
-// events mock
-import MockEvents from '../../mocks/events';
+import { getEvents } from '../../libraries/api';
 
 const styles = {
   eventsContainer: {
@@ -13,24 +12,49 @@ const styles = {
   }
 }
 
-const Events = (props) => {
-  const cs = props.classes;
+class Events extends React.Component {
+  state = {
+    events: [],
+    isLoading: true,
+  }
 
-  const upcomingEvents = MockEvents.filter(event => !event.expired)
+  componentDidMount() {
+    this.fetchEvents();
+  }
 
-  const pastEvents = MockEvents.filter(event => event.expired)
+  fetchEvents = () => {
+    getEvents()
+      .then(res => {
+        this.setState({
+          isLoading: false,
+          events: res.data.body
+        });
+      })
+      .catch(err => {
+        this.setState({
+          isLoading: false
+        });
+      });
+  }
 
-  return (
-    <>
-      <Header />
-      <PageContainer>
-        <div className={cs.eventsContainer}>
-          <EventsList key="nextEvents" title="Próximos eventos" events={upcomingEvents} />
-          <EventsList key="prevEvents" title="Eventos pasados" events={pastEvents} />
-        </div>
-      </PageContainer>
-    </>
-  );
+  render () {
+    const cs = this.props.classes;
+    const upcomingEvents = this.state.events.filter(event => !event.isExpired)
+    const pastEvents = this.state.events.filter(event => event.isExpired)
+    const { isLoading } = this.state;
+
+    return (
+      <>
+        <Header />
+        <PageContainer>
+          <div className={cs.eventsContainer}>
+            <EventsList isLoading={isLoading} key="nextEvents" title="Próximos eventos" events={upcomingEvents} />
+            <EventsList isLoading={isLoading} key="prevEvents" title="Eventos pasados" events={pastEvents} />
+          </div>
+        </PageContainer>
+      </>
+    );
+  }
 }
 
 export default withStyles(styles)(Events);
