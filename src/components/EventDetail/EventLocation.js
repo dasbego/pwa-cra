@@ -4,12 +4,9 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { mdiGoogleMaps, mdiMapMarker } from '@mdi/js';
 import Icon from '@mdi/react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 const EventDescription = (props) => {
-  const openMaps = (url) => {
-    window.location = url;
-  };
   const cs = props.classes;
   const { name, address, mapsUrl } = props;
   return (
@@ -22,8 +19,8 @@ const EventDescription = (props) => {
           <span>{address}</span>
         </div>
       </div>
-      <a href={mapsUrl} rel="noopener noreferrer" target="_blank">
-        <Button className={cs.mapsLink} >
+      <a href={mapsUrl} rel="noopener noreferrer" target="_blank" className={cs.mapsLink}>
+        <Button>
           <Icon path={mdiGoogleMaps} size={2} color="#09a35e" />
           <div className={cs.mapsLinkText}>Abrir en Maps</div>
         </Button>
