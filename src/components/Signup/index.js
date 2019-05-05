@@ -220,6 +220,7 @@ class Signup extends React.Component {
             type="number"
             pattern="[0-9]*"
             inputMode="tel"
+            required
           />
         </FormControl>
         <FormControl margin="dense" variant="outlined">
