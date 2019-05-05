@@ -7,7 +7,7 @@ const LoadingMessage = ({ loading, classes }) => {
   if (loading.isVisible) {
     return (
       <div className={classes.visible}>
-        <Progress primary />
+        <Progress />
         <div className={classes.message}>{ loading.message }</div>
       </div>
     );
