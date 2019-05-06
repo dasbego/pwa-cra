@@ -2,6 +2,7 @@ import Login from '../pages/Home';
 import Events from '../pages/Events';
 import EventDetail from '../pages/EventDetail';
 import News from '../pages/News';
+import Toks from '../pages/Toks';
 
 const routes = [{
     path: '/login',
@@ -34,6 +35,10 @@ const routes = [{
   }, {
     path: '/news/twitter',
     component: News,
+    exact: true
+  }, {
+    path: '/toks',
+    component: Toks,
     exact: true
   }
 ];

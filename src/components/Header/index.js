@@ -19,6 +19,7 @@ import { setIsDrawerOpen } from '../../store/actions/drawer';
 const styles = {
   root: {
     height: '7.0625rem',
+    backgroundColor: '#fff',
   },
   container: {
     display: 'flex',

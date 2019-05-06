@@ -5,7 +5,10 @@ const theme = createMuiTheme({
   breakpoints: {
     
   },
-  palete: {
+  palette: {
+    common: {
+      blue: '#00bff4'
+    },
     action: {
       hover: '#00bff4',
       focus: '#00bff4'

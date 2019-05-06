@@ -62,6 +62,10 @@ class MyDrawer extends React.Component {
           name: 'Noticias',
           path: routerPaths.news,
           onClick: () => this.navigateToPath(routerPaths.news)
+        }, {
+          name: 'Expositores',
+          path: routerPaths.toks,
+          onClick: () => this.navigateToPath(routerPaths.toks)
         }]
       }
       case 'profile': {
