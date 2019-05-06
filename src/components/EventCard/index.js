@@ -39,9 +39,9 @@ const styles ={
   container: {
     display: 'flex',
     marginBottom: '1rem',
-    border: '2px solid #c5c9d2',
+    border: '0 solid #c5c9d2',
     cursor: 'pointer',
-    height: '7.5rem'
+    height: '9.5rem'
   },
   imgContainer: {
     display: 'flex',
@@ -61,7 +61,8 @@ const styles ={
     width: '100%',
     height: '100%',
     backgroundColor: 'gray',
-    objectFit: 'cover'
+    objectFit: 'cover',
+    borderRadius: '3px 0 0 3px'
   },
   description: {
     padding: '1rem',

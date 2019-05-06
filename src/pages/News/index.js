@@ -7,7 +7,6 @@ import { mdiInstagram, mdiTwitterBox } from '@mdi/js';
 import Icon from '@mdi/react';
 import clns from 'classnames';
 
-import Header from '../../components/Header';
 import InstaFeed from '../InstagramFeed';
 import TwitterFeed from '../TwitterFeed';
 
@@ -38,7 +37,6 @@ class News extends React.Component {
     const path = this.props.location.pathname;
     return (
       <>
-        <Header />
         <div className={cs.socialContainer}>
           <Link
             to="/news/twitter"
@@ -60,7 +58,6 @@ class News extends React.Component {
           </Link>
         </div>
         <div className={cs.container}>
-          {/* <Redirect from="/news/" to="/news/twitter" /> */}
           <Route exact path="/news/instagram" component={InstaFeed} />
           <Route exact path="/news/twitter" component={TwitterFeed} />
         </div>

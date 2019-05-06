@@ -3,7 +3,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Header from '../../components/Header';
 import EventsList from '../../components/EventsList';
 import PageContainer from '../../components/PageContainer';
 import { getEvents } from '../../libraries/api';
@@ -47,15 +46,12 @@ class Events extends React.Component {
     const { isLoading } = this.state;
 
     return (
-      <>
-        <Header />
-        <PageContainer>
-          <div className={cs.eventsContainer}>
-            <EventsList isLoading={isLoading} key="nextEvents" title="Próximos eventos" events={upcomingEvents} />
-            <EventsList isLoading={isLoading} key="prevEvents" title="Eventos pasados" events={pastEvents} />
-          </div>
-        </PageContainer>
-      </>
+      <PageContainer>
+        <div className={cs.eventsContainer}>
+          <EventsList isLoading={isLoading} key="nextEvents" title="Próximos eventos" events={upcomingEvents} />
+          <EventsList isLoading={isLoading} key="prevEvents" title="Eventos pasados" events={pastEvents} />
+        </div>
+      </PageContainer>
     );
   }
 }

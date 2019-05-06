@@ -8,3 +8,7 @@ export const LOADING_HIDE = 'LOADING_HIDE';
 // events
 export const EVENTS_UPDATE = 'EVENTS_UPDATE';
 export const EVENTS_CLEAR = 'EVENTS_CLEAR';
+
+// drawer
+export const DRAWER_SET_OPTIONS = 'DRAWER_SET_OPTIONS';
+export const DRAWER_IS_OPEN = 'DRAWER_IS_OPEN';
