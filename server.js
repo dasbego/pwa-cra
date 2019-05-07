@@ -28,6 +28,6 @@ app.use(Morgan(morganOptions));
 
 router.use('/', serverRenderer(store));
 router.use(express.static(path.resolve(__dirname, 'build')));
-app.use('/sand', router);
+app.use(router);
 // app.listen(PORT, () => console.log(`Ready at: https://localhost:${PORT}`))
 https.createServer(config, app).listen(PORT, () => console.log(`Ready at: https://localhost:${PORT}`));
