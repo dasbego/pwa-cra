@@ -38,6 +38,8 @@
     "lodash.has": "^4.5.2",
     "morgan": "^1.9.1",
     "notistack": "^0.8.2",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-facebook-login": "^4.1.1",
@@ -59,5 +61,8 @@
     "@babel/register": "^7.4.4",
     "ignore-styles": "^5.0.1",
     "redux-devtools-extension": "^2.13.8"
+  },
+  "resolutions": {
+    "babel-jest": "24.7.1"
   }
 }
