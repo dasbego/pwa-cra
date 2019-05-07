@@ -10,13 +10,12 @@ import {
 } from '@material-ui/core/styles';
 import { Provider as ReduxProvider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
+import path from 'path';
+import fs from 'fs';
 
 import Routes from '../../routes';
-// import our main App component
 import App from '../../App';
-
-const path = require("path");
-const fs = require("fs");
+import Theme from '../../theme';
 
 function renderFullPage(target, ssrHtml, css) {
   return target.replace(
@@ -37,11 +36,7 @@ export default (store) => (req, res, next) => {
     // Create a new class name generator.
     const generateClassName = createGenerateClassName();
     // Create a theme instance.
-    const theme = createMuiTheme({
-      typography: {
-        useNextVariants: true,
-      },
-    });
+    const theme = Theme;
 
     const context = {}
 
