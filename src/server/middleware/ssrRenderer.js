@@ -5,7 +5,6 @@ import { SheetsRegistry } from 'jss';
 import JssProvider from 'react-jss/lib/JssProvider';
 import {
   MuiThemeProvider,
-  createMuiTheme,
   createGenerateClassName,
 } from '@material-ui/core/styles';
 import { Provider as ReduxProvider } from 'react-redux';
