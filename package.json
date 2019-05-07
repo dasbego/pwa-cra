@@ -5,7 +5,7 @@
   "homepage": "https://sneakerfever.net/sand",
   "scripts": {
     "start": "react-scripts start",
-    "start:prod": "node ./src/server/bootstrap.js",
+    "start:prod": "sudo node ./src/server/bootstrap.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
