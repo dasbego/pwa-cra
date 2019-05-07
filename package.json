@@ -9,7 +9,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "clean-modules": "rm -rf node_modules"
+    "clean": "npm clean-install"
   },
   "eslintConfig": {
     "extends": "react-app"
