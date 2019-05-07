@@ -4,7 +4,7 @@ import Morgan from 'morgan';
 import fs from 'fs';
 import https from 'https';
 
-import { configureStore } from '../store';
+import { configureStore } from './src/store';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -13,7 +13,7 @@ const config = {
   key: fs.readFileSync(__dirname + '/certificates/private.key')
 };
 
-const PORT = 443
+const PORT = 45556
 const path = require('path')
 
 const app = express();
@@ -27,7 +27,7 @@ const morganOptions = isProd ? 'combined' : 'dev';
 app.use(Morgan(morganOptions));
 
 router.use('/', serverRenderer(store));
-router.use(express.static(path.resolve(__dirname, '..', '..', 'build')));
+router.use(express.static(path.resolve(__dirname, 'build')));
 app.use('/sand', router);
 // app.listen(PORT, () => console.log(`Ready at: https://localhost:${PORT}`))
-https.createServer(config, app).listen(PORT);
+https.createServer(config, app).listen(PORT, () => console.log(`Ready at: https://localhost:${PORT}`));

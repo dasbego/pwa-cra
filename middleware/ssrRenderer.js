@@ -12,9 +12,9 @@ import { SnackbarProvider } from 'notistack';
 import path from 'path';
 import fs from 'fs';
 
-import Routes from '../../routes';
-import App from '../../App';
-import Theme from '../../theme';
+import Routes from '../src/routes';
+import App from '../src/App';
+import Theme from '../src/theme';
 
 function renderFullPage(target, ssrHtml, css) {
   return target.replace(
@@ -51,7 +51,7 @@ export default (store) => (req, res, next) => {
     }
 
     // point to the html file created by CRA's build tool
-    const filePath = path.resolve(__dirname, '..', '..', '..', 'build', 'index.html');
+    const filePath = path.resolve(__dirname, '..', 'build', 'index.html');
 
     fs.readFile(filePath, 'utf8', (err, htmlData) => {
         if (err) {
